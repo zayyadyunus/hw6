@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale-1.0">
+        <title>Quick Pick</title>
+        <style>
+            html, body, input {font-size: 20px;}
+            body{background-color: #00b2b2;
+                font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;}
+        </style>
+    </head>
+    <body>
+        <form id="userInput">
+            INPUT YOUR 5 NUMBERS HERE, SEPARATED BY SPACES </br>
+            <input type="text" id="fiveNum"> </br>
+            INPUT YOUR YOUR "LUCKY BALL" NUMBER HERE </br>
+            <input type="text" id="luckNum"> </br>
+            CLICK HERE TO SEE YOUR EARNINGS! </br>
+            <input type='button' onclick='quickPick()' value="Submit"> </br>
+        </form>
+        <p id="out">
+            <!-- QUICKPICK OUTPUT AREA -->
+        </p>
+        <script language="javascript">
+            function quickPick(){
+                var output = "";
+                user_five = document.getElementById("fiveNum").value;
+                user_luck = document.getElementById("luckNum").value;
+                user_arr = user_five.split(" ");
+                var lucky_num;
+                rand_arr = new Array();
+
+                /* Add five random numbers from 1 to 48 to the array */
+                for (i = 0; i < 5; i++) {
+                    rand_val = Math.random() * 47 + 1;
+                    rand_val = Math.round(rand_val);
+                    rand_arr.push(rand_val);
+                }
+                /* Add a lucky ball number from 1 to 18 to the array */
+                rand_val = Math.random() * 17 + 1;
+                lucky_num = Math.round(rand_val);
+                rand_arr.push(lucky_num);
+                /* Display the numbers in the array using  a loop */
+                output += "Displaying unsorted...<br/>";
+                for (i = 0; i < rand_arr.length; i++) {
+                    if (i == rand_arr.length - 1) {
+                        output += (rand_arr[i] + "<br/>");
+                    }
+                    else {
+                        output += (rand_arr[i] + " ");
+                    }
+                }
+                output += "<br/>";
+                /* Sort and display again */
+                rand_arr.sort(function(a, b){return a - b});
+                output += "Displaying sorted...<br/>";
+                for (i = 0; i < rand_arr.length; i++) {
+                    if (i == rand_arr.length - 1) {
+                        output += (rand_arr[i] + "<br/>");
+                    }
+                    else {
+                        output += (rand_arr[i] + " ");
+                    }
+                }
+                output += "<br/>";
+                /* Find matches */
+                var num_matches = 0, is_lucky = false;
+                for (i = 0; i < user_arr.length; i++) {
+                    for (j = 0; j < rand_arr.length; j++) {
+                        if (user_arr[i] == rand_arr[j]) {
+                            num_matches++;
+                        }
+                    }
+                }
+                if (user_luck == lucky_num){
+                    is_lucky = true;
+                }
+                output += "YOUR WINNINGS ARE: <br/>";
+                /* Print winnings */
+                output += "<b>";
+                if (num_matches == 5 && is_lucky) {
+                    output += "You win $7,000 a WEEK for LIFE! <br/>";
+                }
+                else if (num_matches == 5) {
+                    output += "You win $25,000 a YEAR for LIFE! <br/>";
+                }
+                else if (num_matches == 4 && is_lucky) {
+                    output += "You win $5,000 <br/>";
+                }
+                else if (num_matches == 4) {
+                    output += "You win $200 <br/>";
+                }
+                else if (num_matches == 3 && is_lucky) {
+                    output += "You win $150 <br/>";
+                }
+                else if (num_matches == 3) {
+                    output += "You win $20 <br/>";
+                }
+                else if (num_matches == 2 && is_lucky) {
+                    output += "You win $25 <br/>";
+                }
+                else if (num_matches == 2) {
+                    output += "You win $3 <br/>";
+                }
+                else if (num_matches == 1 && is_lucky) {
+                    output += "You win $6 <br/>";
+                }
+                else if (num_matches == 0 && is_lucky) {
+                    output += "You win $4 <br/>";
+                }
+                else {
+                    output += "Sorry, no winnings today. Try again. <br/>";
+                }
+                output += "</b>";
+
+                document.getElementById("out").innerHTML = output;
+            }
+        </script>
+    </body>
+</html>
